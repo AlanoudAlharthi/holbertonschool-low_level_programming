@@ -1,7 +1,21 @@
-#include <stdio.h>
+#include "main.h"
 
-int main() {
-  printf("_putchar\n");
-  printf("I am learning C.");
-  return 0;
+/**
+ * main - Entry point
+ *
+ * Return: Always 0
+ */
+int main(void)
+{
+    _putchar('_');
+    _putchar('p');
+    _putchar('u');
+    _putchar('t');
+    _putchar('c');
+    _putchar('h');
+    _putchar('a');
+    _putchar('r');
+    _putchar('\n');
+
+    return (0);
 }
