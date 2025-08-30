@@ -1,13 +1,12 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include <stdio.h>
 #include <unistd.h>
 
-/* دالة _putchar */
+/* _putchar: writes the character c to stdout */
 int _putchar(char c);
 
-/* دالة print_to_98 */
+/* print_to_98: prints all natural numbers from n to 98 */
 void print_to_98(int n);
 
 #endif /* MAIN_H */

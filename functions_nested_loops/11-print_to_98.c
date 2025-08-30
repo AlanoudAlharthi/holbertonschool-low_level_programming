@@ -1,19 +1,25 @@
 #include "main.h"
 
-/* دالة مساعدة لطباعة الأعداد باستخدام _putchar */
+/**
+ * print_number - prints an integer using _putchar
+ * @n: number to print
+ */
 void print_number(int n)
 {
     if (n < 0)
     {
-        _putchar('-');   /* طباعة علامة السالب */
-        n = -n;          /* تحويل الرقم للموجب */
+        _putchar('-');
+        n = -n;
     }
     if (n / 10)
-        print_number(n / 10);  /* طباعة جميع الأرقام إلا الأخيرة */
-    _putchar((n % 10) + '0'); /* طباعة الرقم الأخير */
+        print_number(n / 10);
+    _putchar((n % 10) + '0');
 }
 
-/* الدالة الرئيسية التي تطبع الأعداد من n إلى 98 */
+/**
+ * print_to_98 - prints all natural numbers from n to 98
+ * @n: starting number
+ */
 void print_to_98(int n)
 {
     int i;
@@ -37,6 +43,6 @@ void print_to_98(int n)
         }
     }
 
-    print_number(98);  /* طباعة الرقم الأخير */
-    _putchar('\n');    /* سطر جديد */
+    print_number(98);
+    _putchar('\n');
 }
