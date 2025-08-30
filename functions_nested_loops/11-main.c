@@ -1,9 +1,9 @@
 #include "main.h"
 
 /**
- * main - اختبار الدالة print_to_98
+ * main - test the print_to_98 function
  *
- * Return: 0
+ * Return: Always 0
  */
 int main(void)
 {
@@ -12,5 +12,6 @@ int main(void)
     print_to_98(111);
     print_to_98(81);
     print_to_98(-10);
+
     return (0);
 }
