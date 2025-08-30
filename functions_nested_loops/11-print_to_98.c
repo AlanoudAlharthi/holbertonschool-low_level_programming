@@ -6,7 +6,7 @@
  * @n: starting number
  *
  * Description: Numbers are separated by a comma and a space.
- * The sequence is in order, ending with 98 and a new line.
+ * The sequence ends with 98 followed by a new line.
  */
 void print_to_98(int n)
 {
