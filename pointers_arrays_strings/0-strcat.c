@@ -1,34 +1,28 @@
-#include "main.h"
-
 /**
- * _strcat - concatenates two strings
- * @dest: pointer to the destination string
- * @src: pointer to the source string
+ * _strncat - concatenates two strings using at most n bytes from src
+ * @dest: destination string
+ * @src: source string
+ * @n: max number of bytes to copy from src
  *
- * Return: pointer to dest
- *
- * Description: Appends the string pointed to by src to the end
- *              of the string pointed to by dest, overwriting the
- *              terminating null byte at the end of dest, and then
- *              adds a terminating null byte.
+ * Return: dest
  */
-char *_strcat(char *dest, char *src)
+char *_strncat(char *dest, char *src, int n)
 {
-	int i = 0, j = 0;
+	int i = 0;
+	int j = 0;
 
-	/* العثور على نهاية dest */
 	while (dest[i] != '\0')
+	{
 		i++;
+	}
 
-	/* نسخ محتوى src بعد نهاية dest */
-	while (src[j] != '\0')
+	while (j < n && src[j] != '\0')
 	{
 		dest[i] = src[j];
 		i++;
 		j++;
 	}
 
-	dest[i] = '\0'; /* إضافة null byte في النهاية */
-
+	dest[i] = '\0';
 	return (dest);
 }
