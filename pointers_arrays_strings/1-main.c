@@ -1,20 +1,15 @@
 #include "main.h"
 #include <stdio.h>
 
-/**
- * main - check the code
- *
- * Return: Always 0.
- */
 int main(void)
 {
-    int a;
-    int b;
+    char s1[98] = "Hello ";
+    char s2[] = "World!\n";
+    char *ptr;
 
-    a = 98;
-    b = 42;
-    printf("a=%d, b=%d\n", a, b);
-    swap_int(&a, &b);
-    printf("a=%d, b=%d\n", a, b);
+    ptr = _strncat(s1, s2, 1);
+    printf("%s\n", s1);
+    ptr = _strncat(s1, s2, 1024);
+    printf("%s", s1);
     return (0);
 }
