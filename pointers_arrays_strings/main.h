@@ -2,9 +2,7 @@
 #define MAIN_H
 
 int _putchar(char c);
-void puts2(char *str);
-void puts_half(char *str);
-char *leet(char *s);
-char *cap_string(char *str);
+void _puts(char *str);
+int _strcmp(char *s1, char *s2);
 
 #endif
