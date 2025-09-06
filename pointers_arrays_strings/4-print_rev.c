@@ -3,6 +3,9 @@
 /**
  * print_rev - prints a string in reverse, followed by a new line
  * @s: pointer to the string
+ *
+ * Description: This function prints the string pointed to by s
+ *              in reverse order using _putchar.
  */
 void print_rev(char *s)
 {
@@ -11,7 +14,7 @@ void print_rev(char *s)
 	while (s[i] != '\0')
 		i++;
 
-	i--; /* عد المؤشر إلى آخر حرف قبل نهاية السلسلة */
+	i--; /* move to the last character before '\0' */
 
 	while (i >= 0)
 	{
