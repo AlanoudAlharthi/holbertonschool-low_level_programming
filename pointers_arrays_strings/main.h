@@ -2,7 +2,8 @@
 #define MAIN_H
 
 int _putchar(char c);
-void _puts(char *str);
-int _strcmp(char *s1, char *s2);
+void reverse_array(int *a, int n);
+/* أي دوال أخرى تستخدمها في main يجب أن تكون معرفة هنا */
+void print_array(int *a, int n);
 
 #endif
