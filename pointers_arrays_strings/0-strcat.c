@@ -1,28 +1,31 @@
 /**
- * _strncat - concatenates two strings using at most n bytes from src
- * @dest: destination string
- * @src: source string
- * @n: max number of bytes to copy from src
+ * _strcat - concatenates two strings
+ * @dest: pointer to destination string
+ * @src: pointer to source string
  *
- * Return: dest
+ * Return: pointer to dest
  */
-char *_strncat(char *dest, char *src, int n)
+char *_strcat(char *dest, char *src)
 {
 	int i = 0;
 	int j = 0;
 
+	/* move i to the end of dest */
 	while (dest[i] != '\0')
 	{
 		i++;
 	}
 
-	while (j < n && src[j] != '\0')
+	/* copy src to dest */
+	while (src[j] != '\0')
 	{
 		dest[i] = src[j];
 		i++;
 		j++;
 	}
 
+	/* add null terminator at the end */
 	dest[i] = '\0';
+
 	return (dest);
 }
