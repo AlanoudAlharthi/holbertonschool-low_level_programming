@@ -2,9 +2,9 @@
 
 /**
  * print_chessboard - prints the chessboard
- * @a: 2D array containing the chessboard
+ * @a: array of 8 rows with 8 columns each
  *
- * Return: void
+ * Return: nothing
  */
 void print_chessboard(char (*a)[8])
 {
