@@ -1,4 +1,4 @@
-#include <stdlib.h> /* for malloc */
+#include <stdlib.h>
 #include "main.h"
 
 /**
@@ -10,21 +10,18 @@
  */
 char *create_array(unsigned int size, char c)
 {
-    char *arr;
-    unsigned int i;
+	char *arr;
+	unsigned int i;
 
-    /* لو الحجم صفر نرجع NULL */
-    if (size == 0)
-        return (NULL);
+	if (size == 0)
+		return (NULL);
 
-    /* نحجز ذاكرة بالحجم المطلوب */
-    arr = malloc(sizeof(char) * size);
-    if (arr == NULL) /* malloc فشل */
-        return (NULL);
+	arr = malloc(sizeof(char) * size);
+	if (arr == NULL)
+		return (NULL);
 
-    /* نملأ المصفوفة بالحرف c */
-    for (i = 0; i < size; i++)
-        arr[i] = c;
+	for (i = 0; i < size; i++)
+		arr[i] = c;
 
-    return (arr);
+	return (arr);
 }
