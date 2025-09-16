@@ -2,11 +2,12 @@
 #include "main.h"
 
 /**
- * _strdup - returns a pointer to a newly allocated space in memory
- *           containing a copy of the string given as a parameter
- * @str: the string to duplicate
+ * _strdup - returns a pointer to a newly allocated space in memory,
+ *           which contains a copy of the string given as a parameter
+ * @str: string to duplicate
  *
- * Return: pointer to duplicated string, or NULL if str = NULL or if malloc fails
+ * Return: pointer to duplicated string
+ *         NULL if str is NULL or if malloc fails
  */
 char *_strdup(char *str)
 {
@@ -16,20 +17,19 @@ char *_strdup(char *str)
 	if (str == NULL)
 		return (NULL);
 
-	/* نحسب طول النص */
+	/* Get string length */
 	while (str[len] != '\0')
 		len++;
 
-	/* نحجز ذاكرة بطول النص + 1 (عشان \0) */
+	/* Allocate memory for copy */
 	dup = malloc(sizeof(char) * (len + 1));
 	if (dup == NULL)
 		return (NULL);
 
-	/* ننسخ النص */
+	/* Copy string */
 	for (i = 0; i < len; i++)
 		dup[i] = str[i];
-
-	dup[len] = '\0'; /* نضيف null terminator */
+	dup[len] = '\0';
 
 	return (dup);
 }
