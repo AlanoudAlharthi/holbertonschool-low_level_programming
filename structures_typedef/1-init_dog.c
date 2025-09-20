@@ -1,4 +1,3 @@
-#include <stddef.h>  /* لتعريف NULL */
 #include "main.h"
 
 /**
