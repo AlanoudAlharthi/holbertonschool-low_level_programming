@@ -20,7 +20,7 @@ char *string_nconcat(char *s1, char *s2, unsigned int n)
 	if (s2 == NULL)
 		s2 = "";
 
-	/* Calculate lengths of s1 and s2 */
+	/* Compute lengths of s1 and s2 */
 	len1 = 0;
 	while (s1[len1] != '\0')
 		len1++;
@@ -36,8 +36,6 @@ char *string_nconcat(char *s1, char *s2, unsigned int n)
 
 	/* Allocate memory using malloc_checked */
 	result = malloc_checked(total_len + 1);
-	if (result == NULL)
-		return (NULL);
 
 	/* Copy s1 */
 	for (i = 0; i < len1; i++)
