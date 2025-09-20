@@ -5,8 +5,8 @@
  * print_dog - prints a struct dog
  * @d: pointer to struct dog
  *
- * Description: If an element of d is NULL, print (nil).
- * If d itself is NULL, print nothing.
+ * Description: If an element is NULL, print (nil) instead.
+ *              If d is NULL, print nothing.
  */
 void print_dog(struct dog *d)
 {
@@ -18,7 +18,7 @@ void print_dog(struct dog *d)
 	else
 		printf("Name: %s\n", d->name);
 
-	printf("Age: %f\n", d->age);
+	printf("Age: %.6f\n", d->age);
 
 	if (d->owner == NULL)
 		printf("Owner: (nil)\n");
