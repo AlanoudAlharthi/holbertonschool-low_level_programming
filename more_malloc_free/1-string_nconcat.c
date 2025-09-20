@@ -20,7 +20,7 @@ char *string_nconcat(char *s1, char *s2, unsigned int n)
 	if (s2 == NULL)
 		s2 = "";
 
-	/* Compute lengths of s1 and s2 */
+	/* Calculate lengths of s1 and s2 */
 	len1 = 0;
 	while (s1[len1] != '\0')
 		len1++;
@@ -47,7 +47,7 @@ char *string_nconcat(char *s1, char *s2, unsigned int n)
 	for (j = 0; j < n; j++)
 		result[len1 + j] = s2[j];
 
-	/* Null terminate */
+	/* Null terminate the string */
 	result[total_len] = '\0';
 
 	return (result);
