@@ -1,7 +1,7 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include <stddef.h> /* لتعريف NULL */
+#include <stddef.h> /* NULL */
 
 /**
  * struct dog - represents a dog
@@ -16,10 +16,10 @@ struct dog
 	char *owner;
 };
 
-/* typedef لتسهيل الاستخدام */
 typedef struct dog dog_t;
 
-/* ترويسات الدوال */
+/* Prototypes */
 void init_dog(struct dog *d, char *name, float age, char *owner);
+void print_dog(struct dog *d);
 
 #endif /* MAIN_H */
