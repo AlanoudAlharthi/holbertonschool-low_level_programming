@@ -14,13 +14,11 @@ char *string_nconcat(char *s1, char *s2, unsigned int n)
 	unsigned int len1, len2, total_len;
 	unsigned int i, j;
 
-	/* Treat NULL as empty string */
 	if (s1 == NULL)
 		s1 = "";
 	if (s2 == NULL)
 		s2 = "";
 
-	/* Compute lengths of s1 and s2 */
 	len1 = 0;
 	while (s1[len1] != '\0')
 		len1++;
@@ -34,20 +32,16 @@ char *string_nconcat(char *s1, char *s2, unsigned int n)
 
 	total_len = len1 + n;
 
-	/* Allocate memory using malloc_checked */
 	result = malloc_checked(total_len + 1);
 	if (result == NULL)
 		return (NULL);
 
-	/* Copy s1 */
 	for (i = 0; i < len1; i++)
 		result[i] = s1[i];
 
-	/* Copy first n bytes of s2 */
 	for (j = 0; j < n; j++)
 		result[len1 + j] = s2[j];
 
-	/* Null terminate */
 	result[total_len] = '\0';
 
 	return (result);
