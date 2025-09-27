@@ -3,9 +3,12 @@
 #include "variadic_functions.h"
 
 /**
-* print_all - prints anything based on a format string
-* @format: list of types: 'c', 'i', 'f', 's'
-*/
+ * print_all - prints anything based on a format string
+ * @format: list of types: 'c', 'i', 'f', 's'
+ *
+ * Description: If a string is NULL, prints (nil). 
+ * Unknown types are ignored. Prints a newline at the end.
+ */
 void print_all(const char * const format, ...)
 {
 	va_list ap;
@@ -13,43 +16,27 @@ void print_all(const char * const format, ...)
 	char *s, *sep = "";
 
 	va_start(ap, format);
-
-	while (format && format[i])
-	{
-		switch (format[i])
+	if (format)
+		while (format[i])
 		{
-		case 'c':
-			printf("%s%c", sep, va_arg(ap, int));
-			sep = ", ";
-			break;
-		case 'i':
-			printf("%s%d", sep, va_arg(ap, int));
-			sep = ", ";
-			break;
-		case 'f':
-			printf("%s%f", sep, va_arg(ap, double));
-			sep = ", ";
-			break;
-		case 's':
-			s = va_arg(ap, char *);
-			printf("%s", sep);
-			switch (s == NULL)
+			if (format[i] == 'c' || format[i] == 'i' ||
+			    format[i] == 'f' || format[i] == 's')
 			{
-			case 0:
-				printf("%s", s);
-				break;
-			default:
-				printf("(nil)");
-				break;
+				if (format[i] == 'c')
+					printf("%s%c", sep, va_arg(ap, int));
+				if (format[i] == 'i')
+					printf("%s%d", sep, va_arg(ap, int));
+				if (format[i] == 'f')
+					printf("%s%f", sep, va_arg(ap, double));
+				if (format[i] == 's')
+				{
+					s = va_arg(ap, char *);
+					printf("%s%s", sep, s ? s : "(nil)");
+				}
+				sep = ", ";
 			}
-			sep = ", ";
-			break;
-		default:
-			break;
+			i++;
 		}
-		i++;
-	}
-
 	printf("\n");
 	va_end(ap);
 }
