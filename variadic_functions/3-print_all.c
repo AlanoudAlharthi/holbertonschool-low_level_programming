@@ -1,52 +1,64 @@
-#include "main.h"
+#include <stdio.h>
+#include <stdarg.h>
+#include "variadic_functions.h"
 
 /**
  * print_all - prints anything based on a format string
- * @format: list of types of arguments passed
- *          c: char, i: int, f: float, s: char *
+ * @format: list of argument types ('c', 'i', 'f', 's')
  *
- * Return: void
+ * Rules:
+ * - Ignore any other characters.
+ * - If a string is NULL, print "(nil)".
+ * - Separate printed items with ", " (no separator before the first).
+ * - Print a newline at the end.
+ * - No for/goto/ternary operators. Max 2 while, 2 if.
  */
 void print_all(const char * const format, ...)
 {
-    va_list args;
-    int i = 0;
-    char *sep = "";
-    char *str;
+	va_list ap;
+	unsigned int i = 0;
+	char *s;
+	int printed = 0; /* 0 = no item printed yet, 1 = at least one printed */
 
-    if (!format)
-    {
-        printf("\n");
-        return;
-    }
+	va_start(ap, format);
 
-    va_start(args, format);
-    while (format[i])
-    {
-        if (format[i] == 'c' || format[i] == 'i' || format[i] == 'f' || format[i] == 's')
-        {
-            switch (format[i])
-            {
-                case 'c':
-                    printf("%s%c", sep, va_arg(args, int));
-                    break;
-                case 'i':
-                    printf("%s%d", sep, va_arg(args, int));
-                    break;
-                case 'f':
-                    printf("%s%f", sep, va_arg(args, double));
-                    break;
-                case 's':
-                    str = va_arg(args, char *);
-                    if (!str)
-                        str = "(nil)";
-                    printf("%s%s", sep, str);
-                    break;
-            }
-            sep = ", ";
-        }
-        i++;
-    }
-    va_end(args);
-    printf("\n");
+	while (format && format[i])
+	{
+		switch (format[i])
+		{
+		case 'c':
+			if (printed)
+				printf(", ");
+			printf("%c", va_arg(ap, int));
+			printed = 1;
+			break;
+		case 'i':
+			if (printed)
+				printf(", ");
+			printf("%d", va_arg(ap, int));
+			printed = 1;
+			break;
+		case 'f':
+			if (printed)
+				printf(", ");
+			printf("%f", va_arg(ap, double));
+			printed = 1;
+			break;
+		case 's':
+			if (printed)
+				printf(", ");
+			s = va_arg(ap, char *);
+			if (!s)
+				s = "(nil)";
+			printf("%s", s);
+			printed = 1;
+			break;
+		default:
+			break;
+		}
+		i++;
+	}
+
+	printf("\n");
+	va_end(ap);
 }
