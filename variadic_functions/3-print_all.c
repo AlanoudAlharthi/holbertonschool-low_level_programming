@@ -6,14 +6,15 @@
  * print_all - prints anything based on a format string
  * @format: list of types: 'c', 'i', 'f', 's'
  *
- * Description: If a string is NULL, prints (nil). 
- * Unknown types are ignored. Prints a newline at the end.
+ * Description: Prints char, int, float, or string. 
+ * If string is NULL, prints (nil). Unknown types are ignored.
  */
 void print_all(const char * const format, ...)
 {
 	va_list ap;
 	unsigned int i = 0;
-	char *s, *sep = "";
+	char *s;
+	char *sep = "";
 
 	va_start(ap, format);
 	if (format)
