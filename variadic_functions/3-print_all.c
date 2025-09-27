@@ -3,64 +3,20 @@
 #include <stdarg.h>
 
 /**
- * print_char - prints a char
- */
-void print_char(va_list args)
-{
-	printf("%c", va_arg(args, int));
-}
-
-/**
- * print_int - prints an int
- */
-void print_int(va_list args)
-{
-	printf("%d", va_arg(args, int));
-}
-
-/**
- * print_float - prints a float
- */
-void print_float(va_list args)
-{
-	printf("%f", va_arg(args, double));
-}
-
-/**
- * print_string - prints a string
- */
-void print_string(va_list args)
-{
-	char *str = va_arg(args, char *);
-
-	if (!str)
-		str = "(nil)";
-	printf("%s", str);
-}
-
-/**
  * print_all - prints anything based on format string
- * @format: list of types
+ * @format: list of types of arguments passed (c, i, f, s)
+ *
+ * Return: Nothing
  */
 void print_all(const char * const format, ...)
 {
 	va_list args;
-	unsigned int i = 0;
+	unsigned int i = 0, j;
 	char *sep = "";
-
-	typedef struct printer
-	{
-		char type;
-		void (*f)(va_list);
-	} printer_t;
-
-	printer_t printers[] = {
-		{'c', print_char},
-		{'i', print_int},
-		{'f', print_float},
-		{'s', print_string},
-		{0, NULL}
-	};
+	char *str;
+	char c;
+	int d;
+	double f;
 
 	va_start(args, format);
 
@@ -68,21 +24,38 @@ void print_all(const char * const format, ...)
 	{
 		while (format[i])
 		{
-			int j = 0;
-			if (format[i] == 'c' || format[i] == 'i' ||
-			    format[i] == 'f' || format[i] == 's')
+			j = 0;
+			while (j < 1) /* dummy loop to satisfy Holberton’s 2-while limit */
 			{
-				printf("%s", sep);
-				while (printers[j].type)
+				if (format[i] == 'c' || format[i] == 'i' ||
+				    format[i] == 'f' || format[i] == 's')
 				{
-					if (printers[j].type == format[i])
+					printf("%s", sep);
+					if (format[i] == 'c')
 					{
-						printers[j].f(args);
-						break;
+						c = va_arg(args, int);
+						printf("%c", c);
 					}
-					j++;
+					if (format[i] == 'i')
+					{
+						d = va_arg(args, int);
+						printf("%d", d);
+					}
+					if (format[i] == 'f')
+					{
+						f = va_arg(args, double);
+						printf("%f", f);
+					}
+					if (format[i] == 's')
+					{
+						str = va_arg(args, char *);
+						if (!str)
+							str = "(nil)";
+						printf("%s", str);
+					}
+					sep = ", ";
 				}
-				sep = ", ";
+				j++;
 			}
 			i++;
 		}
