@@ -3,9 +3,9 @@
 #include "variadic_functions.h"
 
 /**
- * print_all - prints anything based on a format string
- * @format: list of types: 'c', 'i', 'f', 's'
- */
+* print_all - prints anything based on a format string
+* @format: list of types: 'c', 'i', 'f', 's'
+*/
 void print_all(const char * const format, ...)
 {
 	va_list ap;
