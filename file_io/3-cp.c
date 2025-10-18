@@ -4,10 +4,10 @@
 #include <fcntl.h>
 
 /**
- * error_exit - Prints an error message and exits with a given code
+ * error_exit - Print an error message and exit
  * @code: Exit code
- * @msg: Error message format
- * @arg: Argument to include in the message (can be NULL)
+ * @msg: Message format
+ * @arg: Argument for the message
  */
 void error_exit(int code, const char *msg, const char *arg)
 {
@@ -19,11 +19,10 @@ void error_exit(int code, const char *msg, const char *arg)
 }
 
 /**
- * main - Copies the content of a file to another file
+ * main - Copies content of a file to another file
  * @argc: Number of arguments
- * @argv: Array of argument strings
- *
- * Return: 0 on success, exits with error code on failure
+ * @argv: Array of arguments
+ * Return: 0 on success
  */
 int main(int argc, char *argv[])
 {
@@ -49,21 +48,8 @@ int main(int argc, char *argv[])
 		error_exit(99, "Error: Can't write to %s\n", argv[2]);
 	}
 
-	while (1)
+	while ((n_read = read(fd_from, buffer, sizeof(buffer))) > 0)
 	{
-		n_read = read(fd_from, buffer, sizeof(buffer));
-		if (n_read == -1)
-		{
-			if (close(fd_from) == -1)
-				dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd_from);
-			if (close(fd_to) == -1)
-				dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd_to);
-			error_exit(98, "Error: Can't read from file %s\n", argv[1]);
-		}
-
-		if (n_read == 0)
-			break; /* EOF */
-
 		n_written = write(fd_to, buffer, n_read);
 		if (n_written != n_read)
 		{
@@ -73,6 +59,15 @@ int main(int argc, char *argv[])
 				dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd_to);
 			error_exit(99, "Error: Can't write to %s\n", argv[2]);
 		}
+	}
+
+	if (n_read == -1)
+	{
+		if (close(fd_from) == -1)
+			dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd_from);
+		if (close(fd_to) == -1)
+			dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd_to);
+		error_exit(98, "Error: Can't read from file %s\n", argv[1]);
 	}
 
 	if (close(fd_from) == -1)
