@@ -8,8 +8,8 @@
 /**
  * error_exit - prints an error message to stderr and exits
  * @code: exit code
- * @message: error message format
- * @arg: argument to print in the message
+ * @message: format string
+ * @arg: argument to print
  */
 void error_exit(int code, const char *message, const char *arg)
 {
@@ -21,7 +21,6 @@ void error_exit(int code, const char *message, const char *arg)
  * main - copies content of one file to another
  * @argc: argument count
  * @argv: argument vector
- *
  * Return: 0 on success
  */
 int main(int argc, char *argv[])
@@ -50,7 +49,7 @@ int main(int argc, char *argv[])
     while ((bytes_read = read(fd_from, buffer, BUFFER_SIZE)) > 0)
     {
         bytes_written = write(fd_to, buffer, bytes_read);
-        if (bytes_written != bytes_read)
+        if (bytes_written == -1 || bytes_written != bytes_read)
         {
             close(fd_from);
             close(fd_to);
@@ -58,7 +57,6 @@ int main(int argc, char *argv[])
         }
     }
 
-    /* Check if read failed */
     if (bytes_read == -1)
     {
         close(fd_from);
@@ -67,9 +65,15 @@ int main(int argc, char *argv[])
     }
 
     if (close(fd_from) == -1)
-        error_exit(100, "Error: Can't close fd %d\n", fd_from);
+    {
+        dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd_from);
+        exit(100);
+    }
     if (close(fd_to) == -1)
-        error_exit(100, "Error: Can't close fd %d\n", fd_to);
+    {
+        dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd_to);
+        exit(100);
+    }
 
     return 0;
 }
