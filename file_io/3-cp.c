@@ -51,7 +51,8 @@ int main(int argc, char *argv[])
     }
 
     /* Read from source and write to destination */
-    while ((n_read = read(fd_from, buffer, sizeof(buffer))) > 0)
+    n_read = read(fd_from, buffer, sizeof(buffer));
+    while (n_read > 0)
     {
         n_written = write(fd_to, buffer, n_read);
         if (n_written != n_read)
@@ -62,15 +63,15 @@ int main(int argc, char *argv[])
                 dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd_to);
             error_exit(99, "Error: Can't write to %s\n", argv[2]);
         }
-    }
-
-    if (n_read == -1)
-    {
-        if (close(fd_from) == -1)
-            dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd_from);
-        if (close(fd_to) == -1)
-            dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd_to);
-        error_exit(98, "Error: Can't read from file %s\n", argv[1]);
+        n_read = read(fd_from, buffer, sizeof(buffer));
+        if (n_read == -1)
+        {
+            if (close(fd_from) == -1)
+                dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd_from);
+            if (close(fd_to) == -1)
+                dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd_to);
+            error_exit(98, "Error: Can't read from file %s\n", argv[1]);
+        }
     }
 
     /* Close file descriptors */
