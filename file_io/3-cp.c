@@ -4,26 +4,26 @@
 #include <unistd.h>
 
 /**
- * error_exit - print error message and exit
+ * error_exit - print error message and exit with code
  * @code: exit code
  * @msg: error message
- * @file: filename (optional, can be NULL)
+ * @file: file name
  */
 void error_exit(int code, const char *msg, const char *file)
 {
 	if (file)
-		dprintf(2, "%s %s\n", msg, file);
+		dprintf(2, "%s %s\n", msg, file); // stderr
 	else
 		dprintf(2, "%s\n", msg);
 
-	exit(code); /* Only exit, do not print code separately */
+	exit(code); // exit, don't print code to stdout
 }
 
 int main(int argc, char *argv[])
 {
 	int fd_from, fd_to;
 	ssize_t r, w;
-	char buffer[1024];
+	char buf[1024];
 
 	if (argc != 3)
 		error_exit(97, "Usage: cp file_from file_to", NULL);
@@ -39,9 +39,9 @@ int main(int argc, char *argv[])
 		error_exit(99, "Error: Can't write to", argv[2]);
 	}
 
-	while ((r = read(fd_from, buffer, sizeof(buffer))) > 0)
+	while ((r = read(fd_from, buf, sizeof(buf))) > 0)
 	{
-		w = write(fd_to, buffer, r);
+		w = write(fd_to, buf, r);
 		if (w != r)
 		{
 			close(fd_from);
@@ -62,5 +62,5 @@ int main(int argc, char *argv[])
 	if (close(fd_to) == -1)
 		error_exit(100, "Error: Can't close fd", argv[2]);
 
-	return (0);
+	return (0); // do not print the exit code
 }
