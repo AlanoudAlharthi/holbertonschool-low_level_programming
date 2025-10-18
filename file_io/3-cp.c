@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
 		}
 
 		if (n_read == 0)
-			break;
+			break; /* EOF */
 
 		n_written = write(fd_to, buffer, n_read);
 		if (n_written != n_read)
