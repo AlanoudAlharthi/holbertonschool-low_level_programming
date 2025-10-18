@@ -2,13 +2,12 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include <errno.h>
 
 /**
- * error_exit - prints an error message to stderr and exits with a code
+ * error_exit - prints an error message and exits with a code
  * @code: exit code
  * @msg: error message
- * @file: file name (can be NULL if not needed)
+ * @file: file name (if needed)
  */
 void error_exit(int code, const char *msg, const char *file)
 {
@@ -20,7 +19,7 @@ void error_exit(int code, const char *msg, const char *file)
 }
 
 /**
- * main - copies the content of a file to another file
+ * main - copies the content of one file to another
  * @argc: number of arguments
  * @argv: argument vector
  *
@@ -66,7 +65,6 @@ int main(int argc, char *argv[])
 
 	if (close(fd_from) == -1)
 		error_exit(100, "Error: Can't close fd", argv[1]);
-
 	if (close(fd_to) == -1)
 		error_exit(100, "Error: Can't close fd", argv[2]);
 
