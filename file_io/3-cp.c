@@ -1,20 +1,22 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <fcntl.h>
+#include <unistd.h>
+#include <errno.h>
+
+#define BUF_SIZE 1024
 
 /**
- * main - copies the content of a file to another file
- * @ac: number of arguments
- * @av: arguments array
- *
- * Return: 0 on success, exits with error code on failure
+ * main - copies content of a file to another file
+ * @ac: argument count
+ * @av: argument vector
+ * Return: 0 on success, exits with specific codes on failure
  */
 int main(int ac, char **av)
 {
 	int fd_from, fd_to;
-	ssize_t r_bytes, w_bytes;
-	char buffer[1024];
+	ssize_t r, w;
+	char buf[BUF_SIZE];
 
 	if (ac != 3)
 	{
@@ -33,27 +35,32 @@ int main(int ac, char **av)
 	if (fd_to == -1)
 	{
 		dprintf(1, "Error: Can't write to %s\n", av[2]);
-		close(fd_from);
+		if (close(fd_from) == -1)
+			dprintf(1, "Error: Can't close fd %d\n", fd_from);
 		exit(99);
 	}
 
-	while ((r_bytes = read(fd_from, buffer, 1024)) > 0)
+	while ((r = read(fd_from, buf, BUF_SIZE)) > 0)
 	{
-		w_bytes = write(fd_to, buffer, r_bytes);
-		if (w_bytes != r_bytes)
+		w = write(fd_to, buf, r);
+		if (w != r)
 		{
 			dprintf(1, "Error: Can't write to %s\n", av[2]);
-			close(fd_from);
-			close(fd_to);
+			if (close(fd_from) == -1)
+				dprintf(1, "Error: Can't close fd %d\n", fd_from);
+			if (close(fd_to) == -1)
+				dprintf(1, "Error: Can't close fd %d\n", fd_to);
 			exit(99);
 		}
 	}
 
-	if (r_bytes == -1)
+	if (r == -1)
 	{
 		dprintf(1, "Error: Can't read from file %s\n", av[1]);
-		close(fd_from);
-		close(fd_to);
+		if (close(fd_from) == -1)
+			dprintf(1, "Error: Can't close fd %d\n", fd_from);
+		if (close(fd_to) == -1)
+			dprintf(1, "Error: Can't close fd %d\n", fd_to);
 		exit(98);
 	}
 
