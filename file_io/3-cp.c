@@ -2,17 +2,19 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include <errno.h>
 
 /**
  * error_exit - Prints an error message and exits with a given code
  * @code: Exit code
  * @msg: Error message format
- * @arg: Argument to include in the message
+ * @arg: Argument to include in the message (can be NULL if unused)
  */
 void error_exit(int code, const char *msg, const char *arg)
 {
-    dprintf(STDERR_FILENO, msg, arg);
+    if (arg)
+        dprintf(STDERR_FILENO, msg, arg);
+    else
+        dprintf(STDERR_FILENO, "%s", msg);
     exit(code);
 }
 
@@ -29,7 +31,10 @@ int main(int argc, char *argv[])
     char buffer[1024];
 
     if (argc != 3)
-        error_exit(97, "Usage: cp %s %s\n", "file_from file_to");
+    {
+        dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
+        exit(97);
+    }
 
     /* Open source file */
     fd_from = open(argv[1], O_RDONLY);
