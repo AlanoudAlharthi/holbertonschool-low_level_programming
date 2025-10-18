@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include <errno.h>
 
 #define BUFFER_SIZE 1024
 
@@ -59,6 +58,7 @@ int main(int argc, char *argv[])
         }
     }
 
+    /* Check if read failed */
     if (bytes_read == -1)
     {
         close(fd_from);
@@ -67,9 +67,9 @@ int main(int argc, char *argv[])
     }
 
     if (close(fd_from) == -1)
-        error_exit(100, "Error: Can't close fd %d\n", argv[1]);
+        error_exit(100, "Error: Can't close fd %d\n", fd_from);
     if (close(fd_to) == -1)
-        error_exit(100, "Error: Can't close fd %d\n", argv[2]);
+        error_exit(100, "Error: Can't close fd %d\n", fd_to);
 
     return 0;
 }
