@@ -4,10 +4,10 @@
 #include <unistd.h>
 
 /**
- * error_exit - prints error message and exits
+ * error_exit - print error message and exit
  * @code: exit code
- * @msg: message
- * @file: filename
+ * @msg: error message
+ * @file: filename (optional, can be NULL)
  */
 void error_exit(int code, const char *msg, const char *file)
 {
@@ -16,9 +16,7 @@ void error_exit(int code, const char *msg, const char *file)
 	else
 		dprintf(2, "%s\n", msg);
 
-	/* Some checkers expect the code printed to stdout */
-	printf("%d\n", code);
-	exit(code);
+	exit(code); /* Only exit, do not print code separately */
 }
 
 int main(int argc, char *argv[])
