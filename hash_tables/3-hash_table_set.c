@@ -2,76 +2,89 @@
 
 /**
  * create_node - Creates a new hash node
- * @key: The key
- * @value: The value
+ * @key: key string
+ * @value: value string
  *
- * Return: Pointer to new node, or NULL on failure
+ * Return: pointer to new node, or NULL
  */
 hash_node_t *create_node(const char *key, const char *value)
 {
-    hash_node_t *new_node;
+	hash_node_t *node;
 
-    new_node = malloc(sizeof(hash_node_t));
-    if (new_node == NULL)
-        return (NULL);
+	node = malloc(sizeof(hash_node_t));
+	if (!node)
+		return (NULL);
 
-    new_node->key = strdup(key);
-    if (new_node->key == NULL)
-    {
-        free(new_node);
-        return (NULL);
-    }
+	node->key = strdup(key);
+	if (!node->key)
+	{
+		free(node);
+		return (NULL);
+	}
 
-    new_node->value = strdup(value);
-    if (new_node->value == NULL)
-    {
-        free(new_node->key);
-        free(new_node);
-        return (NULL);
-    }
+	node->value = strdup(value);
+	if (!node->value)
+	{
+		free(node->key);
+		free(node);
+		return (NULL);
+	}
 
-    new_node->next = NULL;
-    return (new_node);
+	node->next = NULL;
+	return (node);
+}
+
+/**
+ * update_node - Updates the value of an existing node
+ * @node: node to update
+ * @value: new value
+ *
+ * Return: 1 on success, 0 on failure
+ */
+int update_node(hash_node_t *node, const char *value)
+{
+	char *copy;
+
+	copy = strdup(value);
+	if (!copy)
+		return (0);
+
+	free(node->value);
+	node->value = copy;
+	return (1);
 }
 
 /**
  * hash_table_set - Adds or updates an element in a hash table
- * @ht: The hash table
- * @key: The key (cannot be empty)
- * @value: The value to store (duplicated)
+ * @ht: hash table
+ * @key: key string
+ * @value: value string
  *
- * Return: 1 if it succeeded, 0 otherwise
+ * Return: 1 if success, 0 otherwise
  */
 int hash_table_set(hash_table_t *ht, const char *key, const char *value)
 {
-    unsigned long int index;
-    hash_node_t *node, *temp;
+	unsigned long int index;
+	hash_node_t *temp, *node;
 
-    if (ht == NULL || key == NULL || *key == '\0' || value == NULL)
-        return (0);
+	if (!ht || !key || *key == '\0' || !value)
+		return (0);
 
-    index = key_index((const unsigned char *)key, ht->size);
-    temp = ht->array[index];
+	index = key_index((const unsigned char *)key, ht->size);
+	temp = ht->array[index];
 
-    while (temp != NULL)
-    {
-        if (strcmp(temp->key, key) == 0)
-        {
-            free(temp->value);
-            temp->value = strdup(value);
-            if (temp->value == NULL)
-                return (0);
-            return (1);
-        }
-        temp = temp->next;
-    }
+	while (temp)
+	{
+		if (strcmp(temp->key, key) == 0)
+			return (update_node(temp, value));
+		temp = temp->next;
+	}
 
-    node = create_node(key, value);
-    if (node == NULL)
-        return (0);
+	node = create_node(key, value);
+	if (!node)
+		return (0);
 
-    node->next = ht->array[index];
-    ht->array[index] = node;
-
-    return (1);
+	node->next = ht->array[index];
+	ht->array[index] = node;
+	return (1);
 }
